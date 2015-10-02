@@ -2,78 +2,84 @@ var hours = process.argv[2];
 var minutes = process.argv[3];
 
 // Немного замечательного кода и магии
-var res = '';
-var isNumbers = (isFinite(hours) && isFinite(minutes)) ? true:false;
-var isCorrect = (hours>=0 && hours<=23 && minutes>=0 && minutes<=59) ? true:false;
+var result = '';	
+var isNumbers = (isFinite(hours) && isFinite(minutes));
+var isCorrect = (hours>=0 && hours<=23 && minutes>=0 && minutes<=59);
 if (isNumbers && isCorrect) 
 {		
-	getRoman(hours);
-	res = res + ':';
-	getRoman(minutes);
-	console.log(res);
-	getArt();
+	result += getRoman(hours);
+	result += ':';
+	result += getRoman(minutes);
+	console.log(result);
+	getArt(result);
 }
 else
 	console.log('Время введено не верно');
 	
 function getRoman(n)
 {
+	var res = '';
 	var dec = (n-n%10)/10;
 	if (dec!=0)
-		getDecades(dec);
+		res+=getDecades(dec);
 	var units = n - dec*10;
-	getUnits(units);
+	res+=getUnits(units);
+	return res;
 }
 	
 function getDecades(numb)
-{	
+{
+	var resD = '';
 	switch(numb) 
 	{
 		case 5:
-			res = res + 'L';
+			resD = resD + 'L';
 			break;
 		case 4:
-			res = res + 'XL';
+			resD = resD + 'XL';
 			break;
 		
 		default:
 			for (i=0; i<numb;i++)
-				res = res + "X";
+				resD = resD + "X";
 	}
+	return resD;
 }
 
 function getUnits(numb)
-{	
+{
+	var resU = '';
 	switch(numb) 
 	{
 		case 9:
-			res = res + 'IX';
+			resU = resU + 'IX';
 			break;
 		case 8:
-			res = res + 'VIII';
+			resU = resU + 'VIII';
 			break;
 		case 7:
-			res = res + 'VII';
+			resU = resU + 'VII';
 			break;
 		case 6:
-			res = res + 'VI';
+			resU = resU + 'VI';
 			break;
 		case 5:
-			res = res + 'V';
+			resU = resU + 'V';
 			break;
 		case 0:
-			res = res + '0';
+			resU = resU + '0';
 			break;
 		case 4:
-			res = res + 'IV';
+			resU = resU + 'IV';
 			break;
 		default:
 			for (i=0; i<numb;i++)
-				res = res + "I";
+				resU = resU + "I";
 	}
+	return  resU;
 }
 
-function getArt()
+function getArt(res)
 {
 	var artArray = ['','','',''];
 	for (i=0; i<res.length; i++)
